@@ -1,0 +1,51 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reddit Persona Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 60px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+    }
+    form {
+      display: inline-block;
+      text-align: left;
+      margin-top: 30px;
+    }
+    input[type="text"] {
+      width: 350px;
+      padding: 10px;
+      font-size: 1em;
+    }
+    input[type="submit"] {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Reddit Persona Generator</h1>
+  <p>Enter a Reddit username or profile link below and click "Build Persona"</p>
+  <form method="POST">
+    <label for="username">Reddit Username or Profile Link:</label><br><br>
+    <input type="text" name="username" id="username" placeholder="e.g., kojied or https://www.reddit.com/user/kojied" required><br><br>
+    <input type="submit" value="Build Persona">
+  </form>
+</body>
+</html>

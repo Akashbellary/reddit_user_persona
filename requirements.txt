@@ -1,0 +1,11 @@
+json
+re
+logging
+flask
+dotenv
+praw
+datetime
+sentence_transformers
+pinecone
+openai
+uuid

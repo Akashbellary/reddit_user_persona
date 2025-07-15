@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Persona - {{ persona.metadata.username }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .header .username {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #FF6B35;
+        }
+
+        .section h2 {
+            color: #FF6B35;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .profile-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-label {
+            font-weight: 600;
+            color: #495057;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .profile-value {
+            color: #6c757d;
+            text-align: right;
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .list-item {
+            background: white;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border-left: 3px solid #FF6B35;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .personality-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #FF6B35;
+        }
+
+        .personality-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .personality-label {
+            font-weight: 600;
+            color: #495057;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            width: 120px;
+        }
+
+        .personality-bar {
+            flex: 1;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 15px;
+            position: relative;
+        }
+
+        .personality-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B35, #F7931E);
+            border-radius: 4px;
+            transition: width 2s ease-in-out;
+            width: 0%;
+        }
+
+        .personality-value {
+            font-weight: 700;
+            color: #FF6B35;
+            font-size: 0.9rem;
+            width: 50px;
+            text-align: right;
+        }
+
+        .profession-section {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+        }
+
+        .profession-reason {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .trait-reason {
+            font-size: 0.75rem;
+            color: #6c757d;
+            margin-top: 5px;
+            font-style: italic;
+            line-height: 1.3;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #495057;
+            margin-right: 5px;
+        }
+
+        .badge.verified {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.gold {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge.mod {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .communication-style {
+            background: #e7f3ff;
+            border-left: 4px solid #007bff;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ persona.metadata.username }}</h1>
+            <div class="username">Reddit User Profile</div>
+        </div>
+
+        <div class="main-content">
+            <!-- Left Column -->
+            <div>
+                <div class="section">
+                    <h2>Profile</h2>
+                    <div class="profile-item">
+                        <span class="profile-label">Created</span>
+                        <span class="profile-value">{{ persona.metadata.created_utc }}</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Total Karma</span>
+                        <span class="profile-value">{{ persona.metadata.total_karma }}</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Link Karma</span>
+                        <span class="profile-value">{{ persona.metadata.link_karma }}</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Comment Karma</span>
+                        <span class="profile-value">{{ persona.metadata.comment_karma }}</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Verified Email</span>
+                        <span class="profile-value">
+                            {% if persona.metadata.verified_email %}
+                                <span class="badge verified">Verified</span>
+                            {% else %}
+                                <span class="badge">Not Verified</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Reddit Gold</span>
+                        <span class="profile-value">
+                            {% if persona.metadata.is_gold %}
+                                <span class="badge gold">Gold Member</span>
+                            {% else %}
+                                <span class="badge">Regular</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Moderator</span>
+                        <span class="profile-value">
+                            {% if persona.metadata.is_mod %}
+                                <span class="badge mod">Moderator</span>
+                            {% else %}
+                                <span class="badge">Regular User</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Has Subreddit</span>
+                        <span class="profile-value">
+                            {% if persona.metadata.has_subreddit %}
+                                <span class="badge">Yes</span>
+                            {% else %}
+                                <span class="badge">No</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Subscribers</span>
+                        <span class="profile-value">{{ persona.metadata.subscribers }}</span>
+                    </div>
+                    {% if persona.metadata.profile_title %}
+                    <div class="profile-item">
+                        <span class="profile-label">Profile Title</span>
+                        <span class="profile-value">{{ persona.metadata.profile_title }}</span>
+                    </div>
+                    {% endif %}
+                    {% if persona.metadata.public_description %}
+                    <div class="profile-item">
+                        <span class="profile-label">Description</span>
+                        <span class="profile-value">{{ persona.metadata.public_description }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="section profession-section">
+                    <h2>Likely Profession</h2>
+                    <p><strong>{{ persona.likely_profession }}</strong></p>
+                    <p class="profession-reason">{{ persona.likely_profession_reason }}</p>
+                </div>
+
+                <div class="section communication-style">
+                    <h2>Communication Style</h2>
+                    <p><strong>{{ persona.communication_style|title }}</strong></p>
+                    <p class="profession-reason">{{ persona.communication_style_reason }}</p>
+                </div>
+
+                <div class="section">
+                    <h2>Writing Style</h2>
+                    <p><strong>{{ persona.writing_style|title }}</strong></p>
+                    <p class="profession-reason">{{ persona.writing_style_reason }}</p>
+                </div>
+            </div>
+
+            <!-- Middle Column -->
+            <div>
+                <div class="section">
+                    <h2>Behaviour & Habits</h2>
+                    {% for habit in persona.behaviour_and_habits %}
+                    <div class="list-item">{{ habit }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="section">
+                    <h2>Interests</h2>
+                    {% for interest in persona.interests %}
+                    <div class="list-item">{{ interest }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="personality-section">
+                    <h2>Personality</h2>
+                    
+                    <div class="personality-item">
+                        <span class="personality-label">Introvert</span>
+                        <div class="personality-bar">
+                            <div class="personality-fill" data-width="{% if persona.personality_traits.introvert %}80%{% else %}20%{% endif %}"></div>
+                        </div>
+                        <span class="personality-value">{% if persona.personality_traits.introvert %}80%{% else %}20%{% endif %}</span>
+                    </div>
+                    <div class="trait-reason">{{ persona.personality_traits.introvert_reason }}</div>
+                    
+                    <div class="personality-item">
+                        <span class="personality-label">Extrovert</span>
+                        <div class="personality-bar">
+                            <div class="personality-fill" data-width="{% if persona.personality_traits.extrovert %}80%{% else %}20%{% endif %}"></div>
+                        </div>
+                        <span class="personality-value">{% if persona.personality_traits.extrovert %}80%{% else %}20%{% endif %}</span>
+                    </div>
+                    <div class="trait-reason">{{ persona.personality_traits.extrovert_reason }}</div>
+                    
+                    <div class="personality-item">
+                        <span class="personality-label">Empathy</span>
+                        <div class="personality-bar">
+                            <div class="personality-fill" data-width="{{ (persona.personality_traits.empathy_level * 20) }}%"></div>
+                        </div>
+                        <span class="personality-value">{{ (persona.personality_traits.empathy_level * 20) }}%</span>
+                    </div>
+                    <div class="trait-reason">{{ persona.personality_traits.empathy_level_reason }}</div>
+                    
+                    <div class="personality-item">
+                        <span class="personality-label">Anger</span>
+                        <div class="personality-bar">
+                            <div class="personality-fill" data-width="{{ (persona.personality_traits.anger_level * 20) }}%"></div>
+                        </div>
+                        <span class="personality-value">{{ (persona.personality_traits.anger_level * 20) }}%</span>
+                    </div>
+                    <div class="trait-reason">{{ persona.personality_traits.anger_level_reason }}</div>
+                    
+                    <div class="personality-item">
+                        <span class="personality-label">Confidence</span>
+                        <div class="personality-bar">
+                            <div class="personality-fill" data-width="{{ (persona.personality_traits.confidence_level * 20) }}%"></div>
+                        </div>
+                        <span class="personality-value">{{ (persona.personality_traits.confidence_level * 20) }}%</span>
+                    </div>
+                    <div class="trait-reason">{{ persona.personality_traits.confidence_level_reason }}</div>
+                    
+                    <div class="personality-item">
+                        <span class="personality-label">Analytical</span>
+                        <div class="personality-bar">
+                            <div class="personality-fill" data-width="{% if persona.personality_traits.analytical %}85%{% else %}15%{% endif %}"></div>
+                        </div>
+                        <span class="personality-value">{% if persona.personality_traits.analytical %}85%{% else %}15%{% endif %}</span>
+                    </div>
+                    <div class="trait-reason">{{ persona.personality_traits.analytical_reason }}</div>
+                    
+                    <div class="personality-item">
+                        <span class="personality-label">Judgmental</span>
+                        <div class="personality-bar">
+                            <div class="personality-fill" data-width="{% if persona.personality_traits.judgmental %}75%{% else %}25%{% endif %}"></div>
+                        </div>
+                        <span class="personality-value">{% if persona.personality_traits.judgmental %}75%{% else %}25%{% endif %}</span>
+                    </div>
+                    <div class="trait-reason">{{ persona.personality_traits.judgmental_reason }}</div>
+                    
+                    {% if persona.personality_traits.humor_style %}
+                    <div class="personality-item">
+                        <span class="personality-label">Humor Style</span>
+                        <div style="flex: 1; margin-left: 15px;">
+                            <strong>{{ persona.personality_traits.humor_style|title }}</strong>
+                        </div>
+                    </div>
+                    <div class="trait-reason">{{ persona.personality_traits.humor_style_reason }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+                <div class="section">
+                    <h2>Frustrations</h2>
+                    {% for frustration in persona.frustrations %}
+                    <div class="list-item">{{ frustration }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="section">
+                    <h2>Goals & Needs</h2>
+                    {% for goal in persona.goals_and_needs %}
+                    <div class="list-item">{{ goal }}</div>
+                    {% endfor %}
+                </div>
+
+                {% if persona.location_mentioned %}
+                <div class="section">
+                    <h2>Location</h2>
+                    <div class="list-item">{{ persona.location_mentioned }}</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animate progress bars on page load
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                // Animate personality bars
+                const personalityFills = document.querySelectorAll('.personality-fill');
+                personalityFills.forEach(fill => {
+                    const targetWidth = fill.getAttribute('data-width');
+                    fill.style.width = targetWidth;
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
