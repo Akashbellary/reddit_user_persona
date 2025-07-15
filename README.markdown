@@ -51,7 +51,7 @@ The `.env` file includes API keys for Reddit, Pinecone, and NVIDIA to make it ea
 5. **Directory Structure**:
    Ensure the following structure:
    ```
-   grok_final/
+   reddit_user_persona/
    ├── app.py
    ├── .env
    ├── templates/
