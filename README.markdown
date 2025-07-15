@@ -40,10 +40,10 @@ The `.env` file includes API keys for Reddit, Pinecone, and NVIDIA to make it ea
 4. **Verify `.env` File**:
    The `.env` file is included with pre-configured API keys for convenience:
    ```
-   REDDIT_CLIENT_ID=maiWn74sAvYJvs9g2vdy4A
-   REDDIT_SECRET=Wr8J1ffcKxmwMwen0mpKxPkfG7kS6Q
-   REDDIT_USER_AGENT=user-persona-script/0.1 by Akash
-   PINECONE_API_KEY=pcsk_2RhxZs_CR6hLwfQ2xgKZX1qHY4RbwKXUYsZ2qT12zFvjnuSDoLxtdNZzdCpf4n2Q16bbJE
+   REDDIT_CLIENT_ID=<API KEY>
+   REDDIT_SECRET=<API KEY>
+   REDDIT_USER_AGENT=user-persona-script/0.1
+   PINECONE_API_KEY=<API KEY>
    NVIDIA_API_KEY=your_nvidia_api_key
    ```
    The `NVIDIA_API_KEY` is a placeholder. If it doesn't work, replace it with a valid key from NVIDIA's API dashboard or contact me for an updated key.
