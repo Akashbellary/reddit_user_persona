@@ -1,5 +1,8 @@
 # 🧠 Reddit Persona Analyzer
 
+[Watch Demo Video](https://github.com/Akashbellary/reddit_user_persona/blob/main/VID_20251006_012138.mp4)
+
+
 A **sophisticated AI-powered application** that analyzes Reddit user profiles to generate detailed psychological personas using advanced machine learning, vector embeddings, and large language models. Built with **Next.js 15**, **Python Flask**, and cutting-edge AI technologies.
 
 ---
