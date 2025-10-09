@@ -14,10 +14,11 @@ A sophisticated AI-powered application that analyzes Reddit user profiles to gen
 ## 🛠️ Technology Stack
 
 - **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
-- **Backend**: Node.js (Express), ES Modules
+- **Backend**: Next.js API Routes (Serverless Functions)
 - **AI/ML**: NVIDIA NIM API (Embeddings + LLM), Pinecone Vector Database
 - **Reddit API**: snoowrap (Reddit API wrapper)
 - **UI Components**: shadcn/ui, Lucide React icons
+- **Deployment**: Vercel (Serverless Platform)
 
 ## 🚀 Getting Started
 
@@ -27,7 +28,7 @@ A sophisticated AI-powered application that analyzes Reddit user profiles to gen
 
 ### System Overview
 ```
-Next.js Frontend ──► Flask Backend ──► External APIs
+Next.js Frontend ──► Next.js API Routes ──► External APIs
                                     ├── Reddit API (PRAW)
                                     ├── NVIDIA NIM
                                     └── Pinecone Vector DB
