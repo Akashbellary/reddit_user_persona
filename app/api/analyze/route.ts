@@ -119,11 +119,14 @@ async function getRedditData(username: string, postsLimit = 100, commentsLimit =
 
   console.log(`Fetching Reddit data for: ${username}`)
 
-  const user = await reddit.getUser(username).fetch()
+  // TypeScript can misinterpret Snoowrap's thenable-like return types and produce a recursive "then" type error.
+  // Cast to any to avoid the circular type inference while keeping runtime behavior the same.
+  const user = await (reddit as any).getUser(username).fetch()
 
   const metadata = {
     username: user.name,
     created_utc: user.created_utc ? new Date(user.created_utc * 1000).toISOString() : null,
+    link_arma: user.link_karma || null,
     link_karma: user.link_karma || null,
     comment_karma: user.comment_karma || null,
     total_karma: (user.link_karma || 0) + (user.comment_karma || 0),
