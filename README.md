@@ -1,4 +1,4 @@
-# Reddit Persona Analyzer
+# 🧠 Reddit Persona Analyzer
 
 A sophisticated AI-powered application that analyzes Reddit user profiles to generate detailed psychological personas. Built with Next.js, TypeScript, Node.js backend, and advanced AI technologies.
 
@@ -21,14 +21,30 @@ A sophisticated AI-powered application that analyzes Reddit user profiles to gen
 
 ## 🚀 Getting Started
 
-### Prerequisites
+---
+
+## 🏗️ Architecture
+
+### System Overview
+```
+Next.js Frontend ──► Flask Backend ──► External APIs
+                                    ├── Reddit API (PRAW)
+                                    ├── NVIDIA NIM
+                                    └── Pinecone Vector DB
+```
+
+**Frontend:** Next.js 15, React 19, TypeScript, Tailwind CSS, shadcn/ui  
+**Backend:** Python Flask, PRAW, SentenceTransformers, Pinecone, OpenAI client
 
 - Node.js 18+ 
 - Reddit API credentials ([Get them here](https://www.reddit.com/prefs/apps))
 - Pinecone API key ([Get it here](https://www.pinecone.io/))
 - NVIDIA NIM API key ([Get it here](https://build.nvidia.com/))
 
-### Environment Variables
+### 1. Clone & Install
+```bash
+git clone https://github.com/Akashbellary/reddit_user_persona.git
+cd reddit_user_persona
 
 Create a `.env` file in the **backend** directory:
 
@@ -81,7 +97,7 @@ npm run dev
 npm run dev
 \`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) to view the application.
+---
 
 ## 🔄 How It Works
 
@@ -115,10 +131,10 @@ This application:
 - ✅ Respects Reddit's API terms of service
 - ✅ Uses namespaced vector storage for data isolation
 
-## Contributing
+## 📜 License
 
-Contributions are welcome! Please read our contributing guidelines and submit pull requests for any improvements.
+MIT License - see [LICENSE](LICENSE) file for details.
 
-## License
+---
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+**Built by [Akashbellary](https://github.com/Akashbellary) for AI-powered social media analysis**
