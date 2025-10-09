@@ -1,19 +1,25 @@
 # 🧠 Reddit Persona Analyzer
 
-![App Demo](https://github.com/Akashbellary/reddit_user_persona/blob/main/Reddit_persona.gif)
+A sophisticated AI-powered application that analyzes Reddit user profiles to generate detailed psychological personas. Built with Next.js, TypeScript, Node.js backend, and advanced AI technologies.
 
+## 🌟 Features
 
-A **sophisticated AI-powered application** that analyzes Reddit user profiles to generate detailed psychological personas using advanced machine learning, vector embeddings, and large language models. Built with **Next.js 15**, **Python Flask**, and cutting-edge AI technologies.
+- **AI-Powered Analysis**: Uses NVIDIA NIM LLM and embeddings to analyze user behavior
+- **Comprehensive Profiling**: Generates detailed personality traits, communication styles, and behavioral insights
+- **Modern UI**: Beautiful, responsive interface with real-time progress tracking
+- **Vector Search**: Utilizes Pinecone for intelligent content similarity matching
+- **In-Memory Processing**: No file storage, all processing happens in memory for deployment efficiency
+- **Privacy-Focused**: Analyzes only public Reddit data with ethical considerations
 
----
+## 🛠️ Technology Stack
 
-## 🚀 Features
+- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
+- **Backend**: Node.js (Express), ES Modules
+- **AI/ML**: NVIDIA NIM API (Embeddings + LLM), Pinecone Vector Database
+- **Reddit API**: snoowrap (Reddit API wrapper)
+- **UI Components**: shadcn/ui, Lucide React icons
 
-- **AI-Powered Analysis** – Leverages NVIDIA NIM API with Llama 3.3 Nemotron for psychological analysis
-- **Vector Embeddings** – Uses SentenceTransformers for semantic content representation  
-- **Comprehensive Profiling** – Generates personality traits, communication styles, and behavioral insights
-- **Modern UI** – Responsive interface with real-time progress tracking and dark mode
-- **Privacy-Focused** – Analyzes only public Reddit data with no persistent storage
+## 🚀 Getting Started
 
 ---
 
@@ -30,141 +36,100 @@ Next.js Frontend ──► Flask Backend ──► External APIs
 **Frontend:** Next.js 15, React 19, TypeScript, Tailwind CSS, shadcn/ui  
 **Backend:** Python Flask, PRAW, SentenceTransformers, Pinecone, OpenAI client
 
----
-
-## ⚙️ Installation & Setup
-
-### Prerequisites
-- Node.js 18+
-- Python 3.9+
-- Reddit API credentials
-- Pinecone API key
-- NVIDIA API key
+- Node.js 18+ 
+- Reddit API credentials ([Get them here](https://www.reddit.com/prefs/apps))
+- Pinecone API key ([Get it here](https://www.pinecone.io/))
+- NVIDIA NIM API key ([Get it here](https://build.nvidia.com/))
 
 ### 1. Clone & Install
 ```bash
 git clone https://github.com/Akashbellary/reddit_user_persona.git
 cd reddit_user_persona
 
-# Frontend
-npm install
+Create a `.env` file in the **backend** directory:
 
-# Backend
-cd backend
-pip install -r requirements.txt
-pip install praw python-dotenv pinecone-client openai
-```
-
-### 2. Environment Setup
-Create `.env.local` in root directory:
-```env
+\`\`\`env
+# Reddit API
 REDDIT_CLIENT_ID=your_reddit_client_id
-REDDIT_SECRET=your_reddit_client_secret
-REDDIT_USER_AGENT=RedditPersonaAnalyzer/1.0 by YourUsername
+REDDIT_SECRET=your_reddit_secret
+REDDIT_USER_AGENT=user-persona-script/0.1 by YourName
+
+# Pinecone API
 PINECONE_API_KEY=your_pinecone_api_key
+
+# NVIDIA NIM API
 NVIDIA_API_KEY=your_nvidia_api_key
+
+# Optional
+PORT=5000
+LLM_MODEL_NAME=nvidia/llama-3.3-nemotron-super-49b-v1
+\`\`\`
+
+For the **frontend**, create `.env.local` in the root directory:
+
+\`\`\`env
 FLASK_BACKEND_URL=http://localhost:5000
-```
+\`\`\`
 
-### 3. API Configuration
+### Installation & Running
 
-**Reddit API Setup:**
-1. Visit [Reddit App Preferences](https://www.reddit.com/prefs/apps)
-2. Create new app (type: "script")
-3. Copy client ID and secret
+#### 1. Install Frontend Dependencies
+\`\`\`bash
+npm install
+\`\`\`
 
-**Pinecone Setup:**
-1. Create account at [pinecone.io](https://www.pinecone.io)
-2. Create index: `reddit-user-vdb`, dimensions: `384`, metric: `cosine`
-
----
-
-## 🚦 Running the Application
-
-**Start Backend:**
-```bash
+#### 2. Install Backend Dependencies
+\`\`\`bash
 cd backend
-python app.py
-# Runs on http://localhost:5000
-```
+npm install
+\`\`\`
 
-**Start Frontend:**
-```bash
-npm run dev  
-# Runs on http://localhost:3000
-```
+#### 3. Start Backend Server
+\`\`\`bash
+cd backend
+npm start
+# or for development with auto-reload
+npm run dev
+\`\`\`
 
----
-
-## 🧩 How It Works
-
-1. **Data Collection** – Fetches Reddit posts/comments via PRAW API
-2. **Text Processing** – Chunks content into ~500 character segments
-3. **Vector Embedding** – Generates 384-dimensional embeddings using SentenceTransformers
-4. **Vector Storage** – Stores embeddings in Pinecone with user namespaces
-5. **AI Analysis** – Uses NVIDIA's Llama model to generate structured persona JSON
-6. **Results Display** – Renders comprehensive personality profile in React UI
+#### 4. Start Frontend (in a new terminal)
+\`\`\`bash
+npm run dev
+\`\`\`
 
 ---
+
+## 🔄 How It Works
+
+1. **Data Collection**: Fetches public Reddit posts and comments using the Reddit API
+2. **Text Processing**: Chunks and processes text content for analysis (in-memory)
+3. **Embedding Generation**: Creates vector embeddings using NVIDIA NIM API (384d vectors)
+4. **Vector Storage**: Stores embeddings in Pinecone with user-specific namespaces
+5. **Semantic Search**: Retrieves most relevant chunks for persona generation
+6. **AI Analysis**: Uses NVIDIA's LLM to generate structured psychological insights
+7. **Results Display**: Presents comprehensive persona analysis in an intuitive interface
 
 ## 📡 API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/analyze` | Analyze Reddit user |
-| `GET` | `/api/health` | Health check |
+### Backend (Port 5000)
+- `POST /` - Analyze a Reddit user
+  - Request: `{ "username": "spez" }`
+  - Response: `{ "persona": {...}, "username": "...", "stats": {...} }`
+- `GET /api/health` - Health check endpoint
 
-**Request Format:**
-```json
-{"username": "reddit_username"}
-```
-
-**Response Format:**
-```typescript
-{
-  persona: PersonaAnalysis,
-  username: string,
-  stats: {
-    posts: number,
-    comments: number,
-    chunks: number,
-    stored_vectors: number,
-    relevant_chunks: number
-  }
-}
-```
-
----
+### Frontend (Port 3000)
+- `POST /api/analyze` - Proxy to backend analysis endpoint
+- `GET /api/health` - Frontend health check
 
 ## 🔒 Privacy & Ethics
 
-- **Public Data Only** – Analyzes exclusively public Reddit posts and comments
-- **No Data Storage** – User information is not permanently stored
-- **Research Purpose** – Intended for educational and entertainment use
-- **Ethical AI** – Results should not be used for harassment or discrimination
-
----
-
-## 🐛 Troubleshooting
-
-**Common Issues:**
-- `Reddit user not found` → Verify username exists and profile is public
-- `Pinecone connection failed` → Check API key and index configuration  
-- `Rate limit exceeded` → Wait before retrying or upgrade API tier
-- `Backend connection failed` → Ensure Flask server is running on port 5000
-
----
-
-## 🛠️ Technology Stack
-
-| Component | Technology |
-|-----------|------------|
-| Frontend | Next.js 15, React 19, TypeScript, Tailwind CSS |
-| Backend | Python Flask, PRAW, SentenceTransformers |
-| AI/ML | NVIDIA NIM API, Pinecone Vector Database |
-| UI | shadcn/ui, Lucide React Icons |
-
----
+This application:
+- ✅ Only analyzes publicly available Reddit data
+- ✅ Does not store personal information (in-memory processing)
+- ✅ No file writes or persistent storage of user data
+- ✅ Provides analysis for research and entertainment purposes
+- ✅ Respects Reddit's API terms of service
+- ✅ Uses namespaced vector storage for data isolation
 
 ## 📜 License
 
